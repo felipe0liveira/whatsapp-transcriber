@@ -12,3 +12,6 @@ wheels/
 # Business
 data/
 output/
+
+# Logging
+*.log
