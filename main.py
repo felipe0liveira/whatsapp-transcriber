@@ -30,20 +30,22 @@ def main(zip_path: str, output_file: str = "chat.txt", model_size: str = "small"
     logger.info(f"Output file: {output_file}")
     logger.info(f"Model size: {model_size}")
 
+    # Create output directory
+    output_dir = Path("output")
+    output_dir.mkdir(exist_ok=True)
+    logger.info(f"📁 Created/using output directory: {output_dir}")
+
     # Check GPU availability and log device information
     if torch.cuda.is_available():
         device_name = torch.cuda.get_device_name(0)
         logger.info(f"🚀 Using GPU: {device_name}")
-        print(f"🚀 Using GPU: {device_name}")
     else:
         logger.info("🖥️ Running on CPU")
-        print("🖥️ Running on CPU")
 
     # Extract WhatsApp ZIP file if not already extracted
-    extract_path = "whatsapp_chat"
+    extract_path = output_dir / "whatsapp_chat"
     if not os.path.exists(extract_path):
         logger.info(f"📂 Extracting ZIP file to {extract_path}")
-        print(f"📂 Extracting ZIP file to {extract_path}")
         try:
             with zipfile.ZipFile(zip_path, "r") as z:
                 z.extractall(extract_path)
@@ -53,11 +55,9 @@ def main(zip_path: str, output_file: str = "chat.txt", model_size: str = "small"
             raise
     else:
         logger.info(f"📁 Using existing extracted folder: {extract_path}")
-        print(f"� Using existing extracted folder: {extract_path}")
 
     # Load Whisper model
     logger.info(f"🔄 Loading Whisper model: {model_size}")
-    print(f"🔄 Loading Whisper model: {model_size}")
     try:
         model = whisper.load_model(model_size)
         logger.info("✅ Whisper model loaded successfully")
@@ -73,11 +73,9 @@ def main(zip_path: str, output_file: str = "chat.txt", model_size: str = "small"
     audio_files = list(sorted(audio_folder.glob("*.opus")))
     total_files = len(audio_files)
     logger.info(f"🎵 Found {total_files} audio files to transcribe")
-    print(f"� Found {total_files} audio files to transcribe")
 
     for i, audio_file in enumerate(audio_files, 1):
         logger.info(f"�🎙️ Transcribing {audio_file.name} ({i}/{total_files})")
-        print(f"🎙️ Transcribing {audio_file.name} ({i}/{total_files})")
         
         try:
             # Transcribe audio file (assuming Portuguese language)
@@ -93,7 +91,6 @@ def main(zip_path: str, output_file: str = "chat.txt", model_size: str = "small"
     # Read the original chat file
     chat_file = audio_folder / "_chat.txt"
     logger.info(f"📖 Reading chat file: {chat_file}")
-    print(f"📖 Reading chat file: {chat_file}")
     
     try:
         with open(chat_file, "r", encoding="utf-8") as f:
@@ -105,7 +102,6 @@ def main(zip_path: str, output_file: str = "chat.txt", model_size: str = "small"
 
     # Process chat lines and integrate transcriptions
     logger.info("🔄 Processing chat lines and integrating transcriptions")
-    print("🔄 Processing chat lines and integrating transcriptions")
     
     final_lines = []
     transcriptions_added = 0
@@ -130,25 +126,18 @@ def main(zip_path: str, output_file: str = "chat.txt", model_size: str = "small"
             final_lines.append(line)
 
     # Write the final chat file with transcriptions
-    logger.info(f"💾 Writing final chat file: {output_file}")
-    print(f"💾 Writing final chat file: {output_file}")
+    output_file_path = output_dir / output_file
+    logger.info(f"💾 Writing final chat file: {output_file_path}")
     
     try:
-        with open(output_file, "w", encoding="utf-8") as f:
+        with open(output_file_path, "w", encoding="utf-8") as f:
             f.writelines(final_lines)
         
         logger.info(f"✅ Chat reconstruction completed!")
         logger.info(f"📊 Statistics:")
         logger.info(f"   - Total audio files: {total_files}")
         logger.info(f"   - Transcriptions added: {transcriptions_added}")
-        logger.info(f"   - Output file: {output_file}")
-        
-        print(f"\n✅ Chat reconstruction completed!")
-        print(f"📊 Statistics:")
-        print(f"   - Total audio files: {total_files}")
-        print(f"   - Transcriptions added: {transcriptions_added}")
-        print(f"   - Output saved to: {output_file}")
-        
+        logger.info(f"   - Output file: {output_file_path}")
     except Exception as e:
         logger.error(f"❌ Failed to write output file: {e}")
         raise
