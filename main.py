@@ -258,4 +258,5 @@ def main(zip_path: str, output_file: str = "chat.txt", model_size: str = "small"
 
 
 if __name__ == "__main__":
-    main(zip_path="data/bruno-ferracin.zip", model_size="medium")
+    whatsapp_exported_file = "data/chat.zip"
+    main(zip_path=whatsapp_exported_file, model_size="large")
