@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "openai-whisper",
+    "psutil>=7.0.0",
     "torch>=2.8.0",
 ]
 

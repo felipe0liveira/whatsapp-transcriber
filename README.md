@@ -106,9 +106,9 @@ Você pode escolher diferentes tamanhos de modelo Whisper:
 - `medium` - **Padrão** - Boa precisão
 - `large` - Melhor precisão, mais lento
 
-### Monitoramento de GPU
+### Monitoramento do Sistema
 
-Para verificar se sua GPU está sendo utilizada:
+Para verificar os recursos do sistema:
 
 ```bash
 make monitor
