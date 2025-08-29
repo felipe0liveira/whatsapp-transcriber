@@ -1,34 +1,34 @@
 # WhatsApp Transcriber
 
-Um script Python para transcrever mensagens de áudio do WhatsApp usando OpenAI Whisper.
+A Python script to transcribe WhatsApp audio messages using OpenAI Whisper.
 
-## 📝 Descrição
+## 📝 Description
 
-Este projeto permite transcrever automaticamente mensagens de áudio de conversas exportadas do WhatsApp. O script:
+This project allows you to automatically transcribe audio messages from exported WhatsApp conversations. The script:
 
-- Extrai arquivos ZIP exportados do WhatsApp
-- Identifica mensagens de áudio (.opus)
-- Transcreve o áudio usando o modelo Whisper da OpenAI
-- Integra as transcrições no histórico da conversa
-- Gera um arquivo final com o chat incluindo as transcrições
+- Extracts ZIP files exported from WhatsApp
+- Identifies audio messages (.opus)
+- Transcribes audio using OpenAI's Whisper model
+- Integrates transcriptions into the conversation history
+- Generates a final file with the chat including transcriptions
 
-## 🚀 Funcionalidades
+## 🚀 Features
 
-- ✅ Transcrição automática de mensagens de áudio
-- ✅ Suporte a múltiplos tamanhos de modelo Whisper
-- ✅ Detecção automática de GPU/CPU
-- ✅ Logs detalhados do processo
-- ✅ Preservação do formato original do chat
-- ✅ Suporte a idioma português
+- ✅ Automatic transcription of audio messages
+- ✅ Support for multiple Whisper model sizes
+- ✅ Automatic GPU/CPU detection
+- ✅ Detailed process logging
+- ✅ Preservation of original chat format
+- ✅ Portuguese language support
 
-## 📋 Pré-requisitos
+## 📋 Prerequisites
 
-- Python 3.11 ou superior
-- [uv](https://docs.astral.sh/uv/) (gerenciador de pacotes Python)
+- Python 3.11 or higher
+- [uv](https://docs.astral.sh/uv/) (Python package manager)
 
-### Instalação do uv
+### Installing uv
 
-Se você ainda não tem o `uv` instalado:
+If you don't have `uv` installed yet:
 
 ```bash
 # Linux/macOS
@@ -38,20 +38,20 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-## 🛠️ Instalação
+## 🛠️ Installation
 
-1. **Clone o repositório:**
+1. **Clone the repository:**
 ```bash
 git clone https://github.com/felipe0liveira/whatsapp-transcriber.git
 cd whatsapp-transcriber
 ```
 
-2. **Crie um ambiente virtual:**
+2. **Create a virtual environment:**
 ```bash
 uv venv
 ```
 
-3. **Ative o ambiente virtual:**
+3. **Activate the virtual environment:**
 ```bash
 # Linux/macOS
 source .venv/bin/activate
@@ -60,114 +60,114 @@ source .venv/bin/activate
 .venv\Scripts\activate
 ```
 
-4. **Instale as dependências:**
+4. **Install dependencies:**
 ```bash
 uv sync
 ```
 
-## 📱 Como exportar o chat do WhatsApp
+## 📱 How to export WhatsApp chat
 
-1. Abra o WhatsApp no seu celular
-2. Vá para a conversa que deseja transcrever
-3. Toque nos três pontos (⋮) no canto superior direito
-4. Selecione "Mais" → "Exportar conversa"
-5. Escolha "Incluir mídia"
-6. Salve o arquivo ZIP gerado
+1. Open WhatsApp on your phone
+2. Go to the conversation you want to transcribe
+3. Tap the three dots (⋮) in the top right corner
+4. Select "More" → "Export chat"
+5. Choose "Include media"
+6. Save the generated ZIP file
 
-## 🎯 Como usar
+## 🎯 How to use
 
-1. **Coloque o arquivo ZIP exportado na pasta `data/`:**
+1. **Place the exported ZIP file in the `data/` folder:**
 ```bash
 mkdir -p data
-# Copie seu arquivo .zip para a pasta data/
+# Copy your .zip file to the data/ folder
 ```
 
-2. **Edite o arquivo `main.py` (se necessário):**
-Modifique a linha final para apontar para seu arquivo ZIP:
+2. **Edit the `main.py` file (if necessary):**
+Modify the final line to point to your ZIP file:
 ```python
 if __name__ == "__main__":
-    main(zip_path="data/SEU_ARQUIVO.zip", model_size="medium")
+    main(zip_path="data/YOUR_FILE.zip", model_size="medium")
 ```
 
-3. **Execute o script:**
+3. **Run the script:**
 ```bash
 make run
 ```
 
-## ⚙️ Configurações
+## ⚙️ Configuration
 
-### Tamanhos de modelo disponíveis
+### Available model sizes
 
-Você pode escolher diferentes tamanhos de modelo Whisper:
+You can choose different Whisper model sizes:
 
-- `tiny` - Mais rápido, menor precisão
-- `base` - Balanceado
-- `small` - Boa precisão, velocidade razoável
-- `medium` - **Padrão** - Boa precisão
-- `large` - Melhor precisão, mais lento
+- `tiny` - Fastest, lower accuracy
+- `base` - Balanced
+- `small` - Good accuracy, reasonable speed
+- `medium` - **Default** - Good accuracy
+- `large` - Best accuracy, slower
 
-### Monitoramento do Sistema
+### System Monitoring
 
-Para verificar os recursos do sistema:
+To check system resources:
 
 ```bash
 make monitor
 ```
 
-## 📁 Estrutura de saída
+## 📁 Output structure
 
-Após a execução, você encontrará:
+After execution, you will find:
 
 ```
 output/
-├── chat.txt                    # Chat com transcrições integradas
-└── whatsapp_chat/             # Arquivos extraídos do ZIP
-    ├── _chat.txt              # Chat original
-    ├── *.opus                 # Arquivos de áudio
-    └── *.jpg                  # Imagens (se houver)
+├── chat.txt                    # Chat with integrated transcriptions
+└── whatsapp_chat/             # Files extracted from ZIP
+    ├── _chat.txt              # Original chat
+    ├── *.opus                 # Audio files
+    └── *.jpg                  # Images (if any)
 ```
 
-## 🔧 Solução de problemas
+## 🔧 Troubleshooting
 
-### Erro de GPU/CUDA
+### GPU/CUDA Error
 
-Se você tiver problemas com CUDA, o script automaticamente utilizará a CPU:
+If you have CUDA issues, the script will automatically use CPU:
 
 ```
 🖥️ Running on CPU
 ```
 
-### Erro de codificação
+### Encoding Error
 
-Se houver problemas com caracteres especiais, verifique se os arquivos estão em UTF-8.
+If there are issues with special characters, check that files are in UTF-8.
 
-### Dependências
+### Dependencies
 
-Se houver problemas com as dependências, tente:
+If there are dependency issues, try:
 
 ```bash
 uv sync --reinstall
 ```
 
-## 📊 Log de execução
+## 📊 Execution Log
 
-O script gera logs detalhados em:
+The script generates detailed logs in:
 - Console (stdout)
-- Arquivo `transcription.log`
+- File `transcription.log`
 
-## 🤝 Contribuindo
+## 🤝 Contributing
 
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 📄 Licença
+## 📄 License
 
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+This project is under the MIT license. See the `LICENSE` file for more details.
 
-## 🙏 Agradecimentos
+## 🙏 Acknowledgments
 
-- [OpenAI Whisper](https://github.com/openai/whisper) - Modelo de transcrição de áudio
-- [uv](https://github.com/astral-sh/uv) - Gerenciador de pacotes Python rápido
+- [OpenAI Whisper](https://github.com/openai/whisper) - Audio transcription model
+- [uv](https://github.com/astral-sh/uv) - Fast Python package manager

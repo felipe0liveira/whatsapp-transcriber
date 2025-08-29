@@ -68,7 +68,7 @@ def load_whisper_model(model_size: str) -> whisper.Whisper:
     Load and return the Whisper model.
     
     Args:
-        model_size (str): Size of the Whisper model to load
+        model_size (str): Size of the Whisper model to load: tiny, base, small, medium or large
         
     Returns:
         whisper.Whisper: The loaded Whisper model
