@@ -16,10 +16,15 @@ def get_gpu_stats():
     else:
         return None, None, None
 
-def progress_bar(value, total=100, length=30):
+def progress_bar(value, total=100, length=30, show_percentage=True, unit=""):
     filled = int(length * value / total)
     bar = "█" * filled + "░" * (length - filled)
-    return f"[{bar}] {value}%"
+    
+    if show_percentage:
+        percentage = (value / total) * 100
+        return f"[{bar}] {percentage:.1f}%"
+    else:
+        return f"[{bar}] {value}{unit} / {total}{unit}"
 
 if __name__ == "__main__":
     try:
@@ -28,9 +33,8 @@ if __name__ == "__main__":
             os.system("clear")  # use "cls" se for Windows
             print("📊 Monitoring GPU Usage (Ctrl+C to stop)\n")
             if gpu_util is not None:
-                print(f"GPU Usage: {progress_bar(gpu_util)}")
-                # print(progress_bar(gpu_util))
-                print(f"\nMemory Usage: {mem_used} MiB / {mem_total} MiB")
+                print(f"GPU Usage:    {progress_bar(gpu_util)}")
+                print(f"Memory Usage: {progress_bar(mem_used, mem_total, show_percentage=False, unit=' MiB')}")
             else:
                 print("Error while reading nvidia-smi")
             time.sleep(1)
